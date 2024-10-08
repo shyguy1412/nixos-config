@@ -5,6 +5,7 @@
 , lib
 , config
 , pkgs
+, options
 , ...
 }: {
   # You can import other NixOS modules here
@@ -18,6 +19,7 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
+    ./time.nix
     inputs.home-manager.nixosModules.home-manager
     {
       home-manager.extraSpecialArgs = { inherit inputs outputs; };
@@ -94,7 +96,13 @@
 
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_TIME = "de_DE.UTF-8";
+    };
+  };
+
   console = {
     keyMap = "de";
   };
