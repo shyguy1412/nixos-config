@@ -88,6 +88,7 @@
     nixpkgs-fmt
     htop
     neofetch
+    greetd.tuigreet
   ];
 
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
@@ -99,7 +100,33 @@
   ];
 
   services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
+  # services.displayManager.sddm.enable = true;
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = let
+        tuigreet = "${lib.getExe pkgs.greetd.tuigreet}";
+        baseSessionsDir = "${config.services.displayManager.sessionData.desktops}";
+        xSessions = "${baseSessionsDir}/share/xsessions";
+        waylandSessions = "${baseSessionsDir}/share/wayland-sessions";
+        tuigreetOptions = [
+          "--remember"
+          "--remember-session"
+          "--sessions ${waylandSessions}:${xSessions}"
+          "--time"
+          # Make sure theme is wrapped in single quotes. See https://github.com/apognu/tuigreet/issues/147
+          # "--theme 'border=blue;text=cyan;prompt=green;time=red;action=blue;button=white;container=black;input=red'"
+          # "--cmd startplasma-wayland"
+        ];
+        flags = lib.concatStringsSep " " tuigreetOptions;
+      in {
+        command = "${tuigreet} ${flags}";
+        user = "greeter";
+      };
+    };
+  };
+
   services.desktopManager.plasma6.enable = true;
 
   i18n = {
