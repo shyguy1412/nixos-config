@@ -32,10 +32,6 @@
     }
   ];
 
-  services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-
   nixpkgs = {
     # You can add overlays here
     overlays = [
@@ -95,6 +91,16 @@
   ];
 
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
+
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    elisa
+    kate
+    khelpcenter
+  ];
+
+  services.xserver.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   i18n = {
     defaultLocale = "en_US.UTF-8";
