@@ -1,0 +1,2 @@
+#Nitrokey FIDO2 config
+auth    sufficient pam_u2f.so authfile=/etc/Nitrokey/u2f_keys cue prompt nouserok

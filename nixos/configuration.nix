@@ -20,6 +20,7 @@
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
     ./time.nix
+    ./pam.nix
     inputs.home-manager.nixosModules.home-manager
     {
       home-manager.extraSpecialArgs = { inherit inputs outputs; };
@@ -89,6 +90,8 @@
     htop
     neofetch
     greetd.tuigreet
+    keepassxc
+    # kdePackages.kwallet-pam
   ];
 
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.

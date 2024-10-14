@@ -28,6 +28,7 @@
     discord
     firefox
     steam
+    gimp
   ];
 
   # Enable home-manager and git
